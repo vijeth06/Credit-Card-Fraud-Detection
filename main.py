@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from imblearn.over_sampling import SMOTE
 from sklearn.decomposition import PCA
 from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -29,6 +28,11 @@ from sklearn.metrics import (
 )
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+
+try:
+    from imblearn.over_sampling import SMOTE
+except ImportError:
+    SMOTE = None
 
 sns.set_theme(style="whitegrid")
 
@@ -574,7 +578,7 @@ def train_model(X: pd.DataFrame, y: pd.Series, test_size: float, random_state: i
         model.fit(X_train, y_train)
     else:
         minority_count = y_train.value_counts().min()
-        if minority_count >= 2:
+        if minority_count >= 2 and SMOTE is not None:
             smote = SMOTE(random_state=random_state)
             X_train, y_train = smote.fit_resample(X_train, y_train)
 
