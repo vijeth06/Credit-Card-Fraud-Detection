@@ -235,12 +235,7 @@ def run_eda(
     fig, axes = plt.subplots(1, 2, figsize=(13, 5))
 
     ax = axes[0]
-    sns.barplot(
-        x=class_counts.index.astype(str),
-        y=class_counts.values,
-        palette=["#7fcdbb", "#f03b20"],
-        ax=ax,
-    )
+    ax.bar(class_counts.index.astype(str), class_counts.values, color=["#7fcdbb", "#f03b20"])
     ax.set_yscale("log")
     ax.set_title("Class Counts (Log Scale)")
     ax.set_xlabel("Class")
@@ -250,12 +245,7 @@ def run_eda(
             ax.text(i, value, f"{int(value):,}", ha="center", va="bottom", fontsize=10)
 
     ax = axes[1]
-    sns.barplot(
-        x=class_percent.index.astype(str),
-        y=class_percent.values,
-        palette=["#7fcdbb", "#f03b20"],
-        ax=ax,
-    )
+    ax.bar(class_percent.index.astype(str), class_percent.values, color=["#7fcdbb", "#f03b20"])
     ax.set_title("Class Share (%)")
     ax.set_xlabel("Class")
     ax.set_ylabel("Percentage")
@@ -297,13 +287,13 @@ def run_eda(
             fig, axes = plt.subplots(1, 2, figsize=(13, 5), gridspec_kw={"width_ratios": [2, 1]})
 
             ax = axes[0]
-            sns.boxplot(data=df, x="Class", y=col, palette="Set3", ax=ax)
+            sns.boxplot(data=df, x="Class", y=col, hue="Class", palette="Set3", dodge=False, legend=False, ax=ax)
             sns.stripplot(data=df.sample(min(3000, len(df)), random_state=42), x="Class", y=col, color="black", alpha=0.12, size=1.5, ax=ax)
             ax.set_title(f"{col} by Class (Box + Sampled Points)")
 
             ax = axes[1]
             class_means = df.groupby("Class")[col].mean().reindex([0, 1])
-            sns.barplot(x=class_means.index.astype(str), y=class_means.values, palette=["#7fcdbb", "#f03b20"], ax=ax)
+            ax.bar(class_means.index.astype(str), class_means.values, color=["#7fcdbb", "#f03b20"])
             ax.set_title(f"Mean {col} by Class")
             ax.set_xlabel("Class")
             ax.set_ylabel(f"Mean {col}")
@@ -348,7 +338,7 @@ def run_eda(
 
         ax = axes[1]
         amount_summary = df.groupby("Class")["Amount"].median().reindex([0, 1])
-        sns.barplot(x=amount_summary.index.astype(str), y=amount_summary.values, palette=["#7fcdbb", "#f03b20"], ax=ax)
+        ax.bar(amount_summary.index.astype(str), amount_summary.values, color=["#7fcdbb", "#f03b20"])
         ax.set_title("Median Amount by Class")
         ax.set_xlabel("Class")
         ax.set_ylabel("Median Amount")
