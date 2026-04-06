@@ -25,7 +25,7 @@ The dataset should contain the following columns:
 
 Default input file:
 
-- [creditcard_cleaned.csv](creditcard_cleaned.csv)
+- [creditcard.csv](creditcard.csv)
 
 ## 🛠️ Tech Stack
 
@@ -42,7 +42,7 @@ Current repository layout:
 ```text
 DV/
 ├── main.py
-├── creditcard_cleaned.csv
+├── creditcard.csv
 └── README.md
 ```
 
@@ -72,7 +72,7 @@ python main.py
 Run with explicit arguments:
 
 ```bash
-python main.py --data creditcard_cleaned.csv --test-size 0.2 --random-state 42 --sample-size 10000
+python main.py --data creditcard.csv --test-size 0.2 --random-state 42 --sample-size 10000
 ```
 
 ## ⚙️ Command-Line Arguments
@@ -162,7 +162,7 @@ python main.py --data creditcard_cleaned.csv --test-size 0.2 --random-state 42 -
 
 ## 🧹 Git-Friendly Workflow
 
-- Keep [main.py](main.py), [README.md](README.md), and [creditcard_cleaned.csv](creditcard_cleaned.csv) in the repository
+- Keep [main.py](main.py), [README.md](README.md), and [creditcard.csv](creditcard.csv) in the repository
 - Regenerate the `outputs/` folder by rerunning the script when needed
 - Avoid committing large generated artifacts unless your submission requires them
 

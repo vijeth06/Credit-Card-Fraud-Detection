@@ -782,7 +782,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--data",
         type=str,
-        default="creditcard_cleaned.csv",
+        default="creditcard.csv",
         help="Path to the input CSV dataset.",
     )
     parser.add_argument(
