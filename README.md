@@ -69,6 +69,12 @@ Run the full pipeline with the default dataset:
 python main.py
 ```
 
+Launch the Streamlit GUI:
+
+```bash
+streamlit run app.py
+```
+
 Run with explicit arguments:
 
 ```bash
@@ -114,6 +120,10 @@ python main.py --data creditcard.csv --test-size 0.2 --random-state 42 --sample-
 - outputs/interactive/class_distribution.html
 - outputs/interactive/time_amount_scatter.html
 - outputs/interactive/pca_projection.html
+
+### GUI
+
+- Streamlit dashboard with tabs for overview, EDA, model metrics, and reports
 
 ## 🧠 Pipeline Summary
 
