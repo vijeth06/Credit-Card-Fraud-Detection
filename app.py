@@ -6,6 +6,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
+from PIL import Image, UnidentifiedImageError
 
 from main import (
     create_output_dirs,
@@ -83,6 +84,15 @@ def load_dataset(uploaded_file) -> pd.DataFrame:
 
     st.error("No dataset found. Upload a CSV file or keep creditcard.csv in the project folder.")
     st.stop()
+
+
+def render_image_safe(image_path: Path, caption: str) -> None:
+    try:
+        with Image.open(image_path) as image_file:
+            image_file.load()
+            st.image(image_file.copy(), caption=caption, use_container_width=True)
+    except (UnidentifiedImageError, OSError) as error:
+        st.warning(f"Could not display {caption}: {error}")
 
 
 with st.sidebar:
@@ -202,7 +212,7 @@ with tab_eda:
     for figure_name in figure_files:
         figure_path = output_dirs["figures"] / figure_name
         if figure_path.exists():
-            st.image(str(figure_path), caption=figure_name, use_container_width=True)
+            render_image_safe(figure_path, figure_name)
 
     st.subheader("Interactive Charts")
     interactive_files = [
