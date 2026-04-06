@@ -577,16 +577,29 @@ def train_model(X: pd.DataFrame, y: pd.Series, test_size: float, random_state: i
         model = DummyClassifier(strategy="most_frequent")
         model.fit(X_train, y_train)
     else:
+        if len(X_train) > 120000:
+            train_sample = min(120000, len(X_train))
+            sample_indices = (
+                X_train.groupby(y_train, group_keys=False)
+                .apply(lambda frame: frame.sample(min(len(frame), max(1, train_sample // max(y_train.nunique(), 1))), random_state=random_state))
+                .index
+            )
+            X_train = X_train.loc[sample_indices]
+            y_train = y_train.loc[sample_indices]
+
         minority_count = y_train.value_counts().min()
         if minority_count >= 2 and SMOTE is not None:
             smote = SMOTE(random_state=random_state)
             X_train, y_train = smote.fit_resample(X_train, y_train)
 
         model = RandomForestClassifier(
-            n_estimators=300,
+            n_estimators=120,
             random_state=random_state,
             n_jobs=-1,
             class_weight="balanced_subsample",
+            max_depth=18,
+            min_samples_leaf=2,
+            max_samples=0.7,
         )
         model.fit(X_train, y_train)
 
